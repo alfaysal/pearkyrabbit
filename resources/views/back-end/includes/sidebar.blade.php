@@ -20,7 +20,7 @@
 
           <!-- ######################khoj the Search#################-->
 
-          <li class="nav-item {{($prefix == '/Employee') ? 'menu-open':' '}}">
+          <li class="nav-item {{($prefix == '/Employee' || $prefix == '/Search_Insert') ? 'menu-open':' '}}">
             <a href="#" class="nav-link">
               <i class="fas fa-users"></i>
               <p>
@@ -30,9 +30,16 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item ">
-                <a href="{{ route('index') }}" class="nav-link active">
+                <a href="{{ route('index') }}" class="nav-link {{($route == 'index') ? 'active':' '}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>index</p>
+                </a>
+              </li>
+
+              <li class="nav-item ">
+                <a href="{{ route('serach_insert_index') }}" class="nav-link {{($route == 'serach_insert_index') ? 'active':' '}}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Search & Insert</p>
                 </a>
               </li>
               

@@ -31,4 +31,14 @@ Route::group(['prefix' => 'Employee', 'middleware' => 'auth'], function () {
 
 });
 
+Route::group(['prefix' => 'Search_Insert', 'middleware' => 'auth'], function () {
+
+    Route::get('/page','SearchInsertController@index')->name('serach_insert_index');
+    Route::post('/employee/search','SearchInsertController@SearchEmployee');
+    Route::post('/individualAppend/data','SearchInsertController@getEmployee');
+
+
+
+});
+
 // Route::get('/home', 'HomeController@index')->name('home');

@@ -53,6 +53,7 @@
                   <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>Designation</th>
                     <th>Address</th>
                     <th>Phone</th>
                     <th>Action</th>
@@ -82,6 +83,11 @@
                         <div class="form-group">
                             <label>Name</label>
                             <input class="form-control input-sm" type="text" name="name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <input class="form-control input-sm" type="text" name="designation">
                         </div>
 
                         <div class="form-group">
@@ -141,42 +147,13 @@
               columns: [
                   { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                   { data: 'name', name: 'name' },
+                  { data: 'designation', name: 'designation' },
                   { data: 'address', name: 'address' },
                   { data: 'phone', name: 'phone' },
                   { data: 'action', name: 'action' },
               ]
         });
         
-
-      if ($("#post-form").length > 0) {
-      
-
-        $("#post-form").validate({
-         // other validation rules for the input fields 
-        rules: {
-          name: {
-            required: true,
-          },
-          address: {
-            required: true,
-          }
-        },
-        //this message will appear when validation error occurs
-        messages: {
-          name: {
-            required: "Please Enter Input Values",
-          },
-          address: {
-            required: "Please Enter Search Values",
-          },
-        },
-        submitHandler: function(form) {
-         
-
-
-          }
-      })
-    }
 
 
           $.ajaxSetup({
@@ -194,9 +171,10 @@
          function getInput() {
             var id = $('input[name="id"]').val()
             var name = $('input[name="name"]').val()
+            var designation = $('input[name="designation"]').val()
             var address = $('input[name="address"]').val()
             var phone = $('input[name="phone"]').val()
-            return {id: id, name: name,address:address,phone:phone}
+            return {id: id, name: name,designation: designation,address:address,phone:phone}
         }
 
          function storeEmployee(){
@@ -246,6 +224,7 @@
 
                   $('input[name="id"]').val(data.data.id)
                   $('input[name="name"]').val(data.data.name)
+                  $('input[name="designation"]').val(data.data.designation)
                   $('input[name="address"]').val(data.data.address)
                   $('input[name="phone"]').val(data.data.phone)
 

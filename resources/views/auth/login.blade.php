@@ -15,7 +15,7 @@
           <div class="card bg-secondary border-0 mb-0">
           <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <small>Sign In with credentials</small>
+                <small>Sign In with user name or email credentials</small>
               </div>
               <form method="POST" action="{{ route('login') }}">
                 @csrf

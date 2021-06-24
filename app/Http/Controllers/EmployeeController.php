@@ -18,7 +18,8 @@ class EmployeeController extends Controller
     {
     	$employee = new Employee();
 
-    	$employee->name = $request->name;	
+        $employee->name = $request->name;   
+    	$employee->designation = $request->designation;	
     	$employee->address = $request->address;	
     	$employee->phone = $request->phone;	
 
@@ -52,7 +53,8 @@ class EmployeeController extends Controller
     {
     	$employee = Employee::find($request->id);
 
-    	$employee->name = $request->name;
+        $employee->name = $request->name;
+    	$employee->designation = $request->designation;
     	$employee->address = $request->address;
     	$employee->phone = $request->phone;
 
