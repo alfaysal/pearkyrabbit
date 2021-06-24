@@ -73,12 +73,12 @@
       </div>
 
       <div class="row mt-3" id="table_two">
-          <div class="col-md-8 offset-md-2">
+          <div class="col-md-12">
              <div class="card card-dark">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Appear Table</h3>
               </div>
-                <div class="card-body table-responsive p-0" style="height: 300px;">
+                <div class="card-body table-responsive p-0" style="height: 250px;">
                 <table class="table table-head-fixed text-nowrap">
                   <thead>
                     <tr>
@@ -86,6 +86,7 @@
                       <th>Designation</th>
                       <th>Address</th>
                       <th>Phone</th>
+                      <th>Email</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -93,6 +94,12 @@
 
                   </tbody>
                 </table>
+              </div>
+
+              <div class="card-footer">
+                  <button type="button" onclick="finalSubmitForm()" class="btn btn-success float-right">
+                    Submit
+                  </button>
               </div>
             </div>
            </div>
@@ -102,6 +109,9 @@
 @endsection
 
 @section('scripts')
+
+  <script src="{{ asset('/') }}/asset/plugins/toastr/toastr.min.js"></script>
+
 
 <script>
 
@@ -159,10 +169,12 @@
                   var table_two_row = '';
 
                     table_two_row = '<tr>'+
-                                  '<td>'+data.name+'</td>'+
-                                  '<td>'+data.designation+'</td>'+
-                                  '<td>'+data.address+'</td>'+
-                                  '<td>'+data.phone+'</td>'+
+                                  '<td style="display:none"><input readonly class="form-control"  name="id[]" value="'+data.id+'"/></td>'+
+                                  '<td><input readonly class="form-control" type="text" name="name[]" value="'+data.name+'"/></td>'+
+                                  '<td><input readonly class="form-control" type="text" name="designation[]" value="'+data.designation+'"/></td>'+
+                                  '<td><input  class="form-control" type="text" name="address[]" /></td>'+
+                                  '<td><input class="form-control" type="text" name="phone[]" /></td>'+
+                                  '<td><input class="form-control" type="email" name="email[]" /></td>'+
                                   '<td><a href="#" class="btn btn-sm btn-danger" id="remove_row" data-id="'+data.id+'"> remove </a></td>'+
                                   '</tr>'
 
@@ -181,6 +193,51 @@
 
        
 
+      //  ************************ we dont need to insert name and designation again. so i take employee_id as foreign key and insert the rest of the information*************
+
+
+         function getInputs() {
+            var id = $('input[name="id[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+            var email = $('input[name="email[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+            var address = $('input[name="address[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+            var phone = $('input[name="phone[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+
+            return {'id[]': id,'email[]': email,'address[]': address,'phone[]': phone}
+        }
+
+          function finalSubmitForm(){
+                    $.ajax({
+                        method: 'POST',
+                        url: adminUrl + '/final/store',
+                        data: getInputs(),
+                        dataType: 'JSON',
+                        success: function () {
+
+                        $('#search_result').html('');
+                        $('#table_two_append').html('');
+
+                        successToast()
+
+                          $('#designation_search').val('')
+
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                }
+
+                function successToast(){
+                toastr.success('data added successfully')
+        }
           
         
    

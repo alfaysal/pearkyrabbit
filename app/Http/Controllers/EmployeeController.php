@@ -20,8 +20,6 @@ class EmployeeController extends Controller
 
         $employee->name = $request->name;   
     	$employee->designation = $request->designation;	
-    	$employee->address = $request->address;	
-    	$employee->phone = $request->phone;	
 
     	$employee->save();	
 
@@ -55,8 +53,6 @@ class EmployeeController extends Controller
 
         $employee->name = $request->name;
     	$employee->designation = $request->designation;
-    	$employee->address = $request->address;
-    	$employee->phone = $request->phone;
 
     	$employee->save();
 
