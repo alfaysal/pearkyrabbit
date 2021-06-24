@@ -34,11 +34,8 @@ class EmployeeController extends Controller
 
     	return DataTables::of($employees)
     						->addColumn('action',function($row){
-    							return "<a href='#' id='edit' data-id='".$row->id."'>edit</a> | delete";
+    							return "<a href='#' class='btn btn-sm btn-primary' id='edit' data-id='".$row->id."'>edit</a> <a href='#' class='btn btn-sm btn-danger' id='delete' data-id='".$row->id."'>delete</a>";
     						})
-    						 ->editColumn('name', function($row) {
-			                    return '' . $row->name . '';
-			                })
     						->addIndexColumn()
     						->make(true);
     }
@@ -49,5 +46,31 @@ class EmployeeController extends Controller
     	$employee = Employee::find($request->id);
 
     	return Response::json(array('data'=>$employee));
+    }
+
+    public function UpdateEmployee(Request $request)
+    {
+    	$employee = Employee::find($request->id);
+
+    	$employee->name = $request->name;
+    	$employee->address = $request->address;
+    	$employee->phone = $request->phone;
+
+    	$employee->save();
+
+        return ['success'=>true];
+
+    }
+
+
+    public function DeleteEmployee(Request $request)
+    {
+
+    	$employee = Employee::find($request->id);
+    	
+    	$employee->delete();
+
+        return ['success'=>true];
+
     }
 }

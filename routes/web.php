@@ -25,4 +25,10 @@ Route::group(['prefix' => 'Employee', 'middleware' => 'auth'], function () {
     Route::post('/employee/store','EmployeeController@EmployeeStore');
     Route::get('/table/data','EmployeeController@DatatableData')->name('datatables_data');
     Route::post('/edit/data','EmployeeController@EditData');
-    Route::post('//employee/update','EmployeeController@UpdateEmploye
+    Route::post('/employee/update','EmployeeController@UpdateEmployee');
+    Route::post('/delete/data','EmployeeController@DeleteEmployee');
+
+
+});
+
+// Route::get('/home', 'HomeController@index')->name('home');

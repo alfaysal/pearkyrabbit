@@ -208,7 +208,9 @@
                 success: function () {
                     employee_modal.modal('hide')
                     successToast()  
-                    table.ajax.reload(null,false)              
+                    table.ajax.reload(null,false) 
+                    reset()             
+
                 },
                error: function (error) {
                     console.log(error);
@@ -218,6 +220,14 @@
 
         function successToast(){
                 toastr.success('data added successfully')
+        }
+
+        function infoToast(){
+                toastr.info('data updated successfully')
+        }
+
+        function errorToast(){
+                toastr.error('data deleted')
         }
 
         $(document).on('click','#edit',function(e) {
@@ -230,7 +240,6 @@
                 data: {'id':id},
                 dataType: 'JSON',
                 success: function (data) {
-
 
                   employee_modal.modal('show')
                   employee_modal.find('.modal-title').text('Update Supplier');
@@ -249,24 +258,50 @@
             })
         })
 
+        function reset() {
+            employee_modal.find('input').each(function () {
+                $(this).val(null)
+            })
+        }
 
+        employee_modal.on('hidden.bs.modal', function () {
+            reset()
+        })
         function supplierUpdate() {
           $.ajax({
                 method: 'POST',
                 url: adminUrl + '/employee/update',
-                data: getInputsSupplier(),
+                data: getInput(),
                 dataType: 'JSON',
                 success: function () {
-                    console.log('updated')
-                    reset()
-                    table.clear();
-                    supplier_modal.modal('hide')
-                    getRecordsSupplier();
-                    table.draw();
+                    employee_modal.modal('hide')
                     infoToast();
+                    table.ajax.reload(null,false) 
+                    reset()             
+
                 }
             })
         }
+
+         $(document).on('click','#delete',function(e) {
+            if(!confirm('Are you sure?')) return;
+
+            var id = $(this).data('id');
+
+            $.ajax({
+                method: 'POST',
+                url: adminUrl + '/delete/data',
+                data: {'id':id},
+                dataType: 'JSON',
+                success: function (data) {
+                    table.ajax.reload(null,false) 
+                    errorToast();        
+                },
+               error: function (error) {
+                    console.log(error);
+                }
+            })
+        })
    
 </script>
 
