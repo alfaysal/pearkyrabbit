@@ -68,6 +68,7 @@
         </div>
 
         <div class="modal fade" id="employee_modal">
+          <form id="employe_save">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -77,6 +78,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                      
                         <input type="hidden" name="id">
                         <div class="form-group">
                             <label>Name</label>
@@ -87,6 +89,8 @@
                             <label>Designation</label>
                             <input class="form-control input-sm" type="text" name="designation">
                         </div>
+                     
+                        
 
                        
                         
@@ -94,15 +98,18 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                        <button type="button" class="btn btn-primary SupplierbtnSave"
-                                onClick="storeEmployee()">Save
+                        <button type="submit" class="btn btn-primary SupplierbtnSave"
+                                onClick="storeEmployee()">
+                                Submit
                         </button>
-                        <button type="button" class="btn btn-primary SupplierbtnUpdate"
+
+                        <button type="submit" class="btn btn-primary SupplierbtnUpdate"
                                 onClick="supplierUpdate()">Update
                         </button>
                     </div>
                 </div>
             </div>
+          </form>
         </div>
       
 
@@ -122,6 +129,32 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
 <script>
+
+   if ($("#employe_save").length > 0) {
+      
+            $("#employe_save").validate({
+            rules: {
+              name: {
+                required: true
+              },
+              designation: {
+                required: true
+              }
+            },
+            //this message will appear when validation error occurs
+            messages: {
+              name: {
+                required: "Please Enter Name",
+              },
+              designation: {
+                required: "Please Enter Designation",
+              }
+            },
+            submitHandler: function(form) {
+              
+              }
+          })
+        }
 
 
         var employee_modal = $('#employee_modal');

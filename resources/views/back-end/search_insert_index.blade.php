@@ -74,6 +74,7 @@
 
       <div class="row mt-3" id="table_two">
           <div class="col-md-12">
+            <form id="post-form">
              <div class="card card-dark">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title">Appear Table</h3>
@@ -97,11 +98,10 @@
               </div>
 
               <div class="card-footer">
-                  <button type="button" onclick="finalSubmitForm()" class="btn btn-success float-right">
-                    Submit
-                  </button>
+                  <input type="submit" onclick="finalSubmitForm()" class="btn btn-success float-right">
               </div>
             </div>
+            </form>
            </div>
       </div>
 
@@ -111,10 +111,44 @@
 @section('scripts')
 
   <script src="{{ asset('/') }}/asset/plugins/toastr/toastr.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
 
 <script>
 
+        if ($("#post-form").length > 0) {
+      
+            $("#post-form").validate({
+            rules: {
+              'address[]': {
+                required: true,
+              },
+              'phone[]': {
+                required: true,
+                number: true
+              },
+              'email[]': {
+                required: true
+              }
+            },
+            //this message will appear when validation error occurs
+            messages: {
+              'address[]': {
+                required: "Please Enter Address",
+              },
+              'phone[]': {
+                required: "Please Enter Phone",
+                number: "Please Enter Only Numbers",
+              },
+              'email[]': {
+                required: "Please Enter Email",
+              }
+            },
+            submitHandler: function(form) {
+              
+              }
+          })
+        }
 
         var adminUrl = '{{ url('Search_Insert') }}';
 
@@ -213,7 +247,28 @@
             return {'id[]': id,'email[]': email,'address[]': address,'phone[]': phone}
         }
 
-          function finalSubmitForm(){
+        function finalSubmitForm() {
+          var emptyVal = false;
+          var phone = $('input[name="phone[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+
+          $.each(phone,function(index,value){
+            if(value == ''){
+              emptyVal = true;
+            }
+          })
+
+          if(emptyVal == false){
+            finalSubmit()
+          }else{
+            alert("some of your field is empty")
+          }
+
+        }
+
+          function finalSubmit(){
+
                     $.ajax({
                         method: 'POST',
                         url: adminUrl + '/final/store',
