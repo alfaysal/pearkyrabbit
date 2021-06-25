@@ -173,7 +173,7 @@
                           table_row = '<tr>'+
                                         '<td>'+value.name+'</td>'+
                                         '<td>'+value.designation+'</td>'+
-                                        '<td><a href="#" class="btn btn-sm btn-primary" id="selected_row" data-id="'+value.id+'"> select </a></td>'+
+                                        '<td><a href="#" class="btn btn-sm btn-primary selected_row" id="selected_row_id'+value.id+'"  data-id="'+value.id+'"> select </a></td>'+
                                         '</tr>'
 
                       $('#search_result').append(table_row);
@@ -189,10 +189,10 @@
         })
 
 
-        $(document).on('click','#selected_row',function(e) {
+        $(document).on('click','.selected_row',function(e) {
             e.preventDefault();
             var id = $(this).data('id');
-
+            $('#selected_row_id'+id).removeClass('btn btn-sm btn-primary').addClass('btn btn-sm btn-success')
             $.ajax({
                 method: 'POST',
                 url: adminUrl + '/individualAppend/data',
