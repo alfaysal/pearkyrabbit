@@ -15,7 +15,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0  text-center">Search Employee Designation</h1>
+            <h1 class="m-0  text-center">Search Employee With Designation</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -248,12 +248,30 @@
         }
 
         function finalSubmitForm() {
+
           var emptyVal = false;
           var phone = $('input[name="phone[]"]').map(function(){ 
                     return this.value; 
                 }).get();
+          var email = $('input[name="email[]"]').map(function(){ 
+                    return this.value; 
+                }).get();
+          var address = $('input[name="address[]"]').map(function(){ 
+                  return this.value; 
+              }).get();
 
           $.each(phone,function(index,value){
+            if(value == ''){
+              emptyVal = true;
+            }
+          })
+
+          $.each(email,function(index,value){
+            if(value == ''){
+              emptyVal = true;
+            }
+          })
+          $.each(address,function(index,value){
             if(value == ''){
               emptyVal = true;
             }
